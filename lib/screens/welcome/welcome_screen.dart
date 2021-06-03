@@ -36,7 +36,8 @@ class WelcomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                'Faça login com seus dados que você inseriu durante o seu registro.',
+                'O app que te mantem informado sobre o mundo do basquetebol tudo em um único lugar de forma simples de ser ver.',
+                textAlign: TextAlign.justify,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
