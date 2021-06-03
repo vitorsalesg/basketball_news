@@ -1,3 +1,5 @@
+import 'package:basketball_app/core/app_colors.dart';
+import 'package:basketball_app/core/app_images.dart';
 import 'package:flutter/material.dart';
 
 class SocialNetWorksWidget extends StatelessWidget {
@@ -8,25 +10,25 @@ class SocialNetWorksWidget extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 30,
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.white,
           child: Image.asset(
-            'assets/images/facebook.png',
+            AppImages.facebook,
             height: 40,
           ),
         ),
         CircleAvatar(
           radius: 30,
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.white,
           child: Image.asset(
-            'assets/images/google.png',
+            AppImages.google,
             height: 40,
           ),
         ),
         CircleAvatar(
           radius: 30,
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.white,
           child: Image.asset(
-            'assets/images/twitter.png',
+            AppImages.twitter,
             height: 40,
           ),
         ),

@@ -1,14 +1,17 @@
+import 'package:basketball_app/core/app_colors.dart';
 import 'package:basketball_app/core/widgets/app_bar_widget.dart';
 import 'package:basketball_app/core/widgets/button_widget.dart';
 import 'package:basketball_app/core/widgets/header_widget.dart';
 import 'package:basketball_app/core/widgets/social_networks_widget.dart';
 import 'package:basketball_app/core/widgets/text_field_widget.dart';
 import 'package:basketball_app/screens/login/login_screen.dart';
+import 'package:basketball_app/screens/register/controllers/register_controller.dart';
 import 'package:basketball_app/screens/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class RegisterScreen extends StatelessWidget {
-  final TextEditingController _fieldEmail = TextEditingController();
+  final registerController = RegisterController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,76 +36,119 @@ class RegisterScreen extends StatelessWidget {
                   'Cadastra-se e comece a acompanhar as principais noticias do basquete.',
             ),
             const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Column(
-                children: [
-                  TextFormFieldWidget(
-                    icon: Icon(Icons.email, color: Colors.orange),
-                    label: 'Email',
-                    keyBoard: TextInputType.emailAddress,
-                    obscureField: false,
-                    controlerField: _fieldEmail,
-                    enabledField: true,
-                    lengthField: 60,
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  padding: const EdgeInsets.all(30.0),
+                  child: Column(
                     children: [
-                      Expanded(
-                        child: TextFormFieldWidget(
-                          icon: Icon(Icons.person, color: Colors.orange),
-                          label: 'Nome',
-                          keyBoard: TextInputType.emailAddress,
-                          obscureField: true,
-                          controlerField: _fieldEmail,
-                          enabledField: true,
-                          lengthField: 60,
-                        ),
+                      Observer(
+                        builder: (_) {
+                          return TextFieldWidget(
+                            icon: Icon(Icons.email, color: AppColors.orange),
+                            label: 'Email',
+                            keyBoard: TextInputType.emailAddress,
+                            obscureField: false,
+                            enabledField: !registerController.loading,
+                            onChanged: registerController.setEmail,
+                          );
+                        },
                       ),
-                      const SizedBox(width: 15.0),
-                      Expanded(
-                        child: TextFormFieldWidget(
-                          icon: Icon(Icons.person, color: Colors.orange),
-                          label: 'Sobrenome',
-                          keyBoard: TextInputType.emailAddress,
-                          obscureField: true,
-                          controlerField: _fieldEmail,
-                          enabledField: true,
-                          lengthField: 60,
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          Observer(
+                            builder: (_) {
+                              return Expanded(
+                                child: TextFieldWidget(
+                                  icon: Icon(
+                                    Icons.person,
+                                    color: AppColors.orange,
+                                  ),
+                                  label: 'Nome',
+                                  keyBoard: TextInputType.text,
+                                  obscureField: false,
+                                  enabledField: !registerController.loading,
+                                  onChanged: registerController.setName,
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(width: 15.0),
+                          Observer(
+                            builder: (_) {
+                              return Expanded(
+                                child: TextFieldWidget(
+                                  icon: Icon(
+                                    Icons.person,
+                                    color: AppColors.orange,
+                                  ),
+                                  label: 'Sobrenome',
+                                  keyBoard: TextInputType.text,
+                                  obscureField: false,
+                                  enabledField: !registerController.loading,
+                                  onChanged: registerController.setLastName,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Observer(
+                        builder: (_) {
+                          return TextFieldWidget(
+                            icon: Icon(Icons.lock, color: AppColors.orange),
+                            label: 'Senha',
+                            keyBoard: TextInputType.emailAddress,
+                            obscureField: true,
+                            enabledField: !registerController.loading,
+                            onChanged: registerController.setPassword,
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 50),
+                      Observer(
+                        builder: (_) {
+                          return ButtonWidget(
+                            title: 'Cadastrar',
+                            isBorder: false,
+                            disable: !registerController.isFormValid,
+                            loading: registerController.loading,
+                            onClicked: () async {
+                              registerController.setLoading(true);
+                              await Future.delayed(Duration(seconds: 5));
+                              registerController.setLoading(false);
+
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (ctx) => LoginScreen(),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 30),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        child: SocialNetWorksWidget(),
+                      ),
+                      const SizedBox(height: 50),
+                      ButtonWidget(
+                        title: 'Entrar',
+                        isBorder: true,
+                        onClicked: () => Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (ctx) => LoginScreen(),
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
-                  TextFormFieldWidget(
-                    icon: Icon(Icons.lock, color: Colors.orange),
-                    label: 'Senha',
-                    keyBoard: TextInputType.emailAddress,
-                    obscureField: true,
-                    controlerField: _fieldEmail,
-                    enabledField: true,
-                    lengthField: 60,
-                  ),
-                  const SizedBox(height: 50),
-                  ButtonWidget(
-                    title: 'Cadastrar',
-                    isBorder: false,
-                    onClicked: () {},
-                  ),
-                  const SizedBox(height: 30),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: SocialNetWorksWidget(),
-                  ),
-                  const SizedBox(height: 50),
-                  ButtonWidget(
-                    title: 'Entrar',
-                    isBorder: true,
-                    onClicked: () => Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (ctx) => LoginScreen())),
-                  ),
-                ],
+                ),
               ),
             ),
           ],

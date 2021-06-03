@@ -1,3 +1,4 @@
+import 'package:basketball_app/core/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class HeaderWidget extends StatelessWidget {
@@ -16,11 +17,11 @@ class HeaderWidget extends StatelessWidget {
       width: double.infinity,
       height: 150,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.only(bottomRight: Radius.circular(70)),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: AppColors.grey.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 7,
             offset: Offset(0, 3),
@@ -38,7 +39,7 @@ class HeaderWidget extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 25,
-                  color: Colors.orange,
+                  color: AppColors.orange,
                   fontFamily: 'Montserrat',
                 ),
                 textAlign: TextAlign.left,

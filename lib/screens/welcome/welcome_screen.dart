@@ -1,3 +1,5 @@
+import 'package:basketball_app/core/app_colors.dart';
+import 'package:basketball_app/core/app_images.dart';
 import 'package:basketball_app/core/widgets/button_widget.dart';
 import 'package:basketball_app/screens/login/login_screen.dart';
 import 'package:basketball_app/screens/register/register_screen.dart';
@@ -7,58 +9,60 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Image.asset(
-                'assets/images/logo.png',
-                height: 300,
-                width: 300,
+      backgroundColor: AppColors.white,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 100),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Image.asset(
+                  AppImages.logo,
+                  height: 300,
+                  width: 300,
+                ),
               ),
-            ),
-            Text(
-              'Bem vindo',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 25,
-                fontFamily: 'Montserrat',
+              Text(
+                'Bem vindo',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 25,
+                  fontFamily: 'Montserrat',
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Faça login com seus dados que você inseriu durante o seu registro.',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                fontFamily: 'Montserrat',
+              const SizedBox(height: 10),
+              Text(
+                'Faça login com seus dados que você inseriu durante o seu registro.',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: 'Montserrat',
+                ),
               ),
-            ),
-            const SizedBox(height: 40),
-            ButtonWidget(
-              title: 'Entrar',
-              isBorder: false,
-              onClicked: () => navigatorPage(
-                context,
-                LoginScreen(),
+              const SizedBox(height: 40),
+              ButtonWidget(
+                title: 'Entrar',
+                isBorder: false,
+                onClicked: () => navigatorPage(
+                  context,
+                  LoginScreen(),
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            ButtonWidget(
-              title: 'Cadastrar',
-              isBorder: true,
-              onClicked: () => navigatorPage(
-                context,
-                RegisterScreen(),
+              const SizedBox(height: 20),
+              ButtonWidget(
+                title: 'Cadastrar',
+                isBorder: true,
+                onClicked: () => navigatorPage(
+                  context,
+                  RegisterScreen(),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

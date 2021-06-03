@@ -1,68 +1,50 @@
+import 'package:basketball_app/core/app_colors.dart';
 import 'package:flutter/material.dart';
 
-class TextFormFieldWidget extends StatelessWidget {
+class TextFieldWidget extends StatelessWidget {
   final Widget icon;
   final String label;
   final TextInputType keyBoard;
   final bool obscureField;
-  final TextEditingController controlerField;
   final bool enabledField;
-  final int lengthField;
+  final Function(String) onChanged;
 
-  const TextFormFieldWidget({
+  const TextFieldWidget({
     Key? key,
     required this.icon,
     required this.label,
     required this.keyBoard,
     required this.obscureField,
-    required this.controlerField,
     required this.enabledField,
-    required this.lengthField,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return TextField(
       enabled: enabledField,
       keyboardType: keyBoard,
       obscureText: obscureField,
-      controller: controlerField,
-      cursorColor: Colors.grey,
-      maxLength: lengthField,
+      cursorColor: AppColors.grey,
+      onChanged: onChanged,
       decoration: InputDecoration(
-        labelStyle: TextStyle(color: Colors.orange),
-        focusColor: Colors.orange,
+        labelStyle: TextStyle(color: AppColors.orange),
+        focusColor: AppColors.orange,
         filled: true,
-        fillColor: Colors.white,
+        fillColor: AppColors.white,
         enabledBorder: UnderlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none,
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.orange),
+          borderSide: BorderSide(color: AppColors.orange),
         ),
         labelText: label,
         prefixIcon: icon,
         counterText: '',
         errorStyle: TextStyle(height: 1.5),
       ),
-      /*  validator: (value) {
-        if (value.isEmpty) {
-          return "Campo obrigatório.";
-        } else if (value.length > lengthField) {
-          return "Você ultrapassou o limite de caracteres.\nRemova ${value.length - lengthField} para continuar.";
-        } else if (keyBoard == TextInputType.number && !_isNumeric(value)) {
-          return "Digite apenas números.";
-        }
-
-        return null;
-      }, */
     );
   }
-
-  /* bool _isNumeric(String value) {
-    if (value == null) return false;
-    return int.tryParse(value.replaceAll(' ', '')) != null;
-  } */
 }

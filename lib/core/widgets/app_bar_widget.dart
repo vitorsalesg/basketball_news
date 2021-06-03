@@ -1,3 +1,4 @@
+import 'package:basketball_app/core/app_colors.dart';
 import 'package:basketball_app/screens/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,7 @@ class AppBarWidget extends AppBar {
   }) : super(
           key: key,
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.white,
           elevation: 0,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -22,7 +23,7 @@ class AppBarWidget extends AppBar {
                     builder: (ctx) => WelcomeScreen(),
                   ),
                 ),
-                icon: Icon(Icons.arrow_back, color: Colors.orange),
+                icon: Icon(Icons.arrow_back, color: AppColors.orange),
               ),
               // Your widgets here
             ],
