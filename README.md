@@ -36,11 +36,13 @@ Basketball News - Este aplicativo foi criado com intuito de compartilhar as prin
 	<img alt="mobile screen" width="200" src="https://user-images.githubusercontent.com/42179077/120694944-24134500-c481-11eb-84de-a6bf89676aea.png">	
 </div>
 
+<br>
 
 - App em execução
 
-
-### WEB
+<div  align="center">
+	<img alt="mobile screen" width="250" src="https://user-images.githubusercontent.com/42179077/120715798-8416e500-c49b-11eb-8f63-62e98966e2a3.gif">	
+</div>
 
 
 ---
