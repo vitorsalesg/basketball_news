@@ -21,12 +21,13 @@ class TextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       enabled: enabledField,
       keyboardType: keyBoard,
       obscureText: obscureField,
       cursorColor: AppColors.grey,
       onChanged: onChanged,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         labelStyle: TextStyle(color: AppColors.orange),
         focusColor: AppColors.orange,
@@ -45,6 +46,21 @@ class TextFieldWidget extends StatelessWidget {
         counterText: '',
         errorStyle: TextStyle(height: 1.5),
       ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Campo Obrigatorio';
+        } else if (keyBoard == TextInputType.emailAddress) {
+          bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+          ).hasMatch(value);
+
+          if (!emailValid) {
+            return 'Email invalido.';
+          }
+        }
+
+        return null;
+      },
     );
   }
 }

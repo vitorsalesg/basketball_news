@@ -13,6 +13,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 class LoginScreen extends StatelessWidget {
   final loginController = LoginController();
+  final formKeyLogin = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,30 +44,41 @@ class LoginScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(30.0),
                   child: Column(
                     children: [
-                      Observer(
-                        builder: (_) {
-                          return TextFieldWidget(
-                            icon: Icon(Icons.email, color: AppColors.orange),
-                            label: 'Email',
-                            keyBoard: TextInputType.emailAddress,
-                            obscureField: false,
-                            enabledField: !loginController.loading,
-                            onChanged: loginController.setEmail,
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 20),
-                      Observer(
-                        builder: (_) {
-                          return TextFieldWidget(
-                            icon: Icon(Icons.lock, color: AppColors.orange),
-                            label: 'Senha',
-                            keyBoard: TextInputType.emailAddress,
-                            obscureField: true,
-                            enabledField: !loginController.loading,
-                            onChanged: loginController.setPassword,
-                          );
-                        },
+                      Form(
+                        key: formKeyLogin,
+                        child: Column(
+                          children: [
+                            Observer(
+                              builder: (_) {
+                                return TextFieldWidget(
+                                  icon: Icon(Icons.email,
+                                      color: AppColors.orange),
+                                  label: 'Email',
+                                  keyBoard: TextInputType.emailAddress,
+                                  obscureField: false,
+                                  enabledField: !loginController.loading,
+                                  onChanged: loginController.setEmail,
+                                );
+                              },
+                            ),
+                            const SizedBox(height: 20),
+                            Observer(
+                              builder: (_) {
+                                return TextFieldWidget(
+                                  icon: Icon(
+                                    Icons.lock,
+                                    color: AppColors.orange,
+                                  ),
+                                  label: 'Senha',
+                                  keyBoard: TextInputType.text,
+                                  obscureField: true,
+                                  enabledField: !loginController.loading,
+                                  onChanged: loginController.setPassword,
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 50),
                       Observer(
@@ -74,21 +86,22 @@ class LoginScreen extends StatelessWidget {
                           return ButtonWidget(
                             title: 'Entrar',
                             isBorder: false,
-                            disable: !loginController.isFormValid,
                             loading: loginController.loading,
                             onClicked: () async {
-                              loginController.setLoading(true);
+                              if (formKeyLogin.currentState!.validate()) {
+                                loginController.setLoading(true);
 
-                              await Future.delayed(Duration(seconds: 10));
+                                await Future.delayed(Duration(seconds: 5));
 
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (ctx) => HomeScreen(),
-                                ),
-                              );
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (ctx) => HomeScreen(),
+                                  ),
+                                );
 
-                              loginController.setLoading(false);
+                                loginController.setLoading(false);
+                              }
                             },
                           );
                         },

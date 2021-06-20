@@ -16,9 +16,6 @@ abstract class _LoginControllerBase with Store {
   @action
   void setPassword(String value) => fieldPassword = value;
 
-  @computed
-  bool get isFormValid => fieldEmail.length > 6 && fieldPassword.length > 6;
-
   @observable
   bool loading = false;
 

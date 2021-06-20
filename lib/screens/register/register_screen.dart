@@ -12,6 +12,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 class RegisterScreen extends StatelessWidget {
   final registerController = RegisterController();
+  final formKeyRegister = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -42,70 +43,84 @@ class RegisterScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(30.0),
                   child: Column(
                     children: [
-                      Observer(
-                        builder: (_) {
-                          return TextFieldWidget(
-                            icon: Icon(Icons.email, color: AppColors.orange),
-                            label: 'Email',
-                            keyBoard: TextInputType.emailAddress,
-                            obscureField: false,
-                            enabledField: !registerController.loading,
-                            onChanged: registerController.setEmail,
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Observer(
-                            builder: (_) {
-                              return Expanded(
-                                child: TextFieldWidget(
-                                  icon: Icon(
-                                    Icons.person,
-                                    color: AppColors.orange,
-                                  ),
-                                  label: 'Nome',
-                                  keyBoard: TextInputType.text,
+                      Form(
+                        key: formKeyRegister,
+                        child: Column(
+                          children: [
+                            Observer(
+                              builder: (_) {
+                                return TextFieldWidget(
+                                  icon: Icon(Icons.email,
+                                      color: AppColors.orange),
+                                  label: 'Email',
+                                  keyBoard: TextInputType.emailAddress,
                                   obscureField: false,
                                   enabledField: !registerController.loading,
-                                  onChanged: registerController.setName,
+                                  onChanged: registerController.setEmail,
+                                );
+                              },
+                            ),
+                            const SizedBox(height: 20),
+                            Row(
+                              children: [
+                                Observer(
+                                  builder: (_) {
+                                    return Expanded(
+                                      child: TextFieldWidget(
+                                        icon: Icon(
+                                          Icons.person,
+                                          color: AppColors.orange,
+                                        ),
+                                        label: 'Nome',
+                                        keyBoard: TextInputType.text,
+                                        obscureField: false,
+                                        enabledField:
+                                            !registerController.loading,
+                                        onChanged: registerController.setName,
+                                      ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
-                          ),
-                          const SizedBox(width: 15.0),
-                          Observer(
-                            builder: (_) {
-                              return Expanded(
-                                child: TextFieldWidget(
+                                const SizedBox(width: 15.0),
+                                Observer(
+                                  builder: (_) {
+                                    return Expanded(
+                                      child: TextFieldWidget(
+                                        icon: Icon(
+                                          Icons.person,
+                                          color: AppColors.orange,
+                                        ),
+                                        label: 'Sobrenome',
+                                        keyBoard: TextInputType.text,
+                                        obscureField: false,
+                                        enabledField:
+                                            !registerController.loading,
+                                        onChanged:
+                                            registerController.setLastName,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 20),
+                            Observer(
+                              builder: (_) {
+                                return TextFieldWidget(
                                   icon: Icon(
-                                    Icons.person,
+                                    Icons.lock,
                                     color: AppColors.orange,
                                   ),
-                                  label: 'Sobrenome',
+                                  label: 'Senha',
                                   keyBoard: TextInputType.text,
-                                  obscureField: false,
+                                  obscureField: true,
                                   enabledField: !registerController.loading,
-                                  onChanged: registerController.setLastName,
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Observer(
-                        builder: (_) {
-                          return TextFieldWidget(
-                            icon: Icon(Icons.lock, color: AppColors.orange),
-                            label: 'Senha',
-                            keyBoard: TextInputType.emailAddress,
-                            obscureField: true,
-                            enabledField: !registerController.loading,
-                            onChanged: registerController.setPassword,
-                          );
-                        },
+                                  onChanged: registerController.setPassword,
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 50),
                       Observer(
@@ -113,19 +128,20 @@ class RegisterScreen extends StatelessWidget {
                           return ButtonWidget(
                             title: 'Cadastrar',
                             isBorder: false,
-                            disable: !registerController.isFormValid,
                             loading: registerController.loading,
                             onClicked: () async {
-                              registerController.setLoading(true);
-                              await Future.delayed(Duration(seconds: 5));
-                              registerController.setLoading(false);
+                              if (formKeyRegister.currentState!.validate()) {
+                                registerController.setLoading(true);
+                                await Future.delayed(Duration(seconds: 5));
+                                registerController.setLoading(false);
 
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (ctx) => LoginScreen(),
-                                ),
-                              );
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (ctx) => LoginScreen(),
+                                  ),
+                                );
+                              }
                             },
                           );
                         },
